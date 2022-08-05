@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,12 @@ public class TransactionController {
     public ResponseEntity<Void> save(@Valid @RequestBody TransactionDto transactionDto) {
         transactionService.save(transactionDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "transaction")
+    public ResponseEntity<Void> deleteAll(){
+        transactionService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

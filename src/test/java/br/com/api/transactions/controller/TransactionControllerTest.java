@@ -31,11 +31,12 @@ class TransactionControllerTest {
         List<Transaction> transactions = List.of(TransactionUtil.createTransaction());
 
         BDDMockito.doNothing().when(transactionService).save(ArgumentMatchers.any(TransactionDto.class));
+        BDDMockito.doNothing().when(transactionService).deleteAll();
 
     }
 
     @Test
-    void save_PersistATransactionInMemory_whenSuccessful(){
+    void save_persistATransactionInMemory_whenSuccessful(){
         TransactionDto transaction = TransactionUtil.createTransactionDto();
 
         ResponseEntity<Void> responseEntity = transactionController.save(transaction);
@@ -45,6 +46,16 @@ class TransactionControllerTest {
         Assertions.assertThat(responseEntity.getStatusCode())
                 .isNotNull()
                 .isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    void deleteAll_deleteAllTransactionsInMemory_whenSuccessul(){
+        ResponseEntity<Void> entity = transactionController.deleteAll();
+
+        Assertions.assertThat(entity)
+                .isNotNull();
+        Assertions.assertThat(entity.getStatusCode())
+                .isEqualTo(HttpStatus.OK);
     }
 
 }

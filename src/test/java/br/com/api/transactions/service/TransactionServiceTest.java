@@ -26,13 +26,20 @@ class TransactionServiceTest {
     @BeforeEach
     void setup(){
         BDDMockito.doNothing().when(transactionRepository).save(ArgumentMatchers.any(Transaction.class));
+        BDDMockito.doNothing().when(transactionRepository).deleteAll();
     }
 
     @Test
-    void save_PersistATransactionInMemoryAndExceptionIsNotThrows_whenSuccessful(){
+    void save_persistATransactionInMemoryAndExceptionIsNotThrows_whenSuccessful(){
         Transaction transaction = TransactionUtil.createTransaction();
 
         Assertions.assertThatCode(() -> transactionRepository.save(transaction))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void deleteAll_deleteAllTransactionsInMemory_whenSuccessul(){
+        Assertions.assertThatCode(() -> transactionService.deleteAll())
                 .doesNotThrowAnyException();
     }
 }

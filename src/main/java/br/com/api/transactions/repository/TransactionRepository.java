@@ -16,7 +16,7 @@ public class TransactionRepository implements AbstractRepositoryManager<Transact
         transactions.add(transaction);
     }
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws RuntimeException{
         transactions.removeAll(findAll());
     }
     @Override

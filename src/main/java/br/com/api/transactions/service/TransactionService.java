@@ -39,6 +39,15 @@ public class TransactionService {
         }catch (RuntimeException ex){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
+
+        log.info(transactionRepository.getTransactions());
     }
 
+    public void deleteAll() {
+        try{
+            transactionRepository.deleteAll();
+        }catch(RuntimeException ex){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

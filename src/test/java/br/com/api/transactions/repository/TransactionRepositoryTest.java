@@ -15,7 +15,7 @@ class TransactionRepositoryTest {
     private TransactionRepository transactionRepository;
 
     @Test
-    void save_PersistATransactionInMemory_whenSuccessful(){
+    void save_persistATransactionInMemory_whenSuccessful(){
         Transaction transaction = TransactionUtil.createTransaction();
 
         transactionRepository.save(transaction);
@@ -26,5 +26,16 @@ class TransactionRepositoryTest {
                 .contains(transaction);
         Assertions.assertThat(transactionRepository.getTransactions().size())
                 .isEqualTo(1);
+    }
+
+    @Test
+    void deleteAll_deleteAllTransactionsInMemory_whenSuccessul(){
+        transactionRepository.save(TransactionUtil.createTransaction());
+        transactionRepository.deleteAll();
+
+        Assertions.assertThat(transactionRepository.getTransactions())
+                .isNotNull()
+                .isEmpty();
+
     }
 }
