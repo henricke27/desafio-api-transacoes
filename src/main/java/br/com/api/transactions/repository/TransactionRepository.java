@@ -17,13 +17,8 @@ public class TransactionRepository implements AbstractRepositoryManager<Transact
     }
     @Override
     public void deleteAll() throws RuntimeException{
-        transactions.removeAll(findAll());
+        transactions.removeAll(getTransactions());
     }
-    @Override
-    public List<Transaction> findAll() {
-        return getTransactions();
-    }
-
     public List<Transaction> getTransactions() {
         return Collections.unmodifiableList(transactions);
     }

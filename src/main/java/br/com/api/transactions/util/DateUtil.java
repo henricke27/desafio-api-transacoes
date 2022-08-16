@@ -3,8 +3,14 @@ package br.com.api.transactions.util;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class DateUtil {
+
+    public static long calculateSecondsDifference(LocalDateTime initialDate){
+        return initialDate.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+    }
+
 
     public static boolean isPast(LocalDateTime dateTimeToBeValidated){
         int i = dateTimeToBeValidated.compareTo(LocalDateTime.now());

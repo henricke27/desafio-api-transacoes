@@ -37,7 +37,7 @@ public class TransactionService {
         try{
             transactionRepository.save(transaction);
         }catch (RuntimeException ex){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         }
 
         log.info(transactionRepository.getTransactions());
