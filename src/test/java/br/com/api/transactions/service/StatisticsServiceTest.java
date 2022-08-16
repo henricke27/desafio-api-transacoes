@@ -31,6 +31,7 @@ class StatisticsServiceTest {
 
         BDDMockito.when(transactionRepository.getTransactions())
                 .thenReturn(Collections.unmodifiableList(transactions));
+
     }
 
     @Test
