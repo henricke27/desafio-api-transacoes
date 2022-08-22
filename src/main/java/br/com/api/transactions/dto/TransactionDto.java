@@ -1,10 +1,11 @@
 package br.com.api.transactions.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 
@@ -13,9 +14,9 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 public class TransactionDto {
-    @NotNull
+    @NotNull(message = "The value cannot be null")
     @DecimalMin(value = "0.00", message = "The value cannot be negative")
     private BigDecimal value;
-    @NotNull
+    @NotNull(message = "The value cannot be null")
     private String dateTime;
 }

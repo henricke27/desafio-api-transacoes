@@ -2,6 +2,7 @@ package br.com.api.transactions.service;
 
 import br.com.api.transactions.domain.Transaction;
 import br.com.api.transactions.dto.TransactionDto;
+import br.com.api.transactions.exception.DateInTheFutureException;
 import br.com.api.transactions.repository.TransactionRepository;
 import br.com.api.transactions.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class TransactionService {
         LocalDateTime currentDateTime = DateUtil
                 .convertStringOffSetDateTimeToLocalDateTime(transactionDto.getDateTime());
 
-        if(DateUtil.isPast(currentDateTime)){
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "The date value cannot be in the future");
+        if(DateUtil.isFuture(currentDateTime)){
+            throw new DateInTheFutureException();
         }
 
         log.info(currentDateTime);

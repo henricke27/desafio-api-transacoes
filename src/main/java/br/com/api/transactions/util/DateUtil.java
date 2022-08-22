@@ -12,7 +12,7 @@ public class DateUtil {
     }
 
 
-    public static boolean isPast(LocalDateTime dateTimeToBeValidated){
+    public static boolean isFuture(LocalDateTime dateTimeToBeValidated){
         int i = dateTimeToBeValidated.compareTo(LocalDateTime.now());
         if(i < 1){
             return false;
