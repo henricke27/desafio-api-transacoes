@@ -3,15 +3,19 @@ package br.com.api.transactions.service;
 import br.com.api.transactions.domain.Transaction;
 import br.com.api.transactions.dto.TransactionDto;
 import br.com.api.transactions.exception.DateInTheFutureException;
+import br.com.api.transactions.exception.NegativeValueException;
 import br.com.api.transactions.repository.TransactionRepository;
 import br.com.api.transactions.util.DateUtil;
+import br.com.api.transactions.validation.FieldsValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -24,8 +28,12 @@ public class TransactionService {
         LocalDateTime currentDateTime = DateUtil
                 .convertStringOffSetDateTimeToLocalDateTime(transactionDto.getDateTime());
 
-        if(DateUtil.isFuture(currentDateTime)){
+        if(FieldsValidator.isFuture(currentDateTime)){
             throw new DateInTheFutureException();
+        }
+
+        if(FieldsValidator.isNegative(transactionDto.getValue())){
+            throw new NegativeValueException();
         }
 
         log.info(currentDateTime);
@@ -35,20 +43,12 @@ public class TransactionService {
                 .value(transactionDto.getValue())
                 .build();
 
-        try{
-            transactionRepository.save(transaction);
-        }catch (RuntimeException ex){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-        }
+        transactionRepository.save(transaction);
 
         log.info(transactionRepository.getTransactions());
     }
 
     public void deleteAll() {
-        try{
-            transactionRepository.deleteAll();
-        }catch(RuntimeException ex){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        transactionRepository.deleteAll();
     }
 }

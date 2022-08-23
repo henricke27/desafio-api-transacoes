@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class TransactionDto {
     @NotNull(message = "The value cannot be null")
-    @DecimalMin(value = "0.00", message = "The value cannot be negative")
     private BigDecimal value;
     @NotNull(message = "The value cannot be null")
     private String dateTime;

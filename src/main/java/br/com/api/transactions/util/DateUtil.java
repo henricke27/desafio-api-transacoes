@@ -11,15 +11,6 @@ public class DateUtil {
         return initialDate.until(LocalDateTime.now(), ChronoUnit.SECONDS);
     }
 
-
-    public static boolean isFuture(LocalDateTime dateTimeToBeValidated){
-        int i = dateTimeToBeValidated.compareTo(LocalDateTime.now());
-        if(i < 1){
-            return false;
-        }
-        return true;
-    }
-
     public static LocalDateTime convertStringOffSetDateTimeToLocalDateTime(String dateTimeWithOffSet){
         OffsetDateTime offsetDateTime = OffsetDateTime
                 .parse(dateTimeWithOffSet, DateTimeFormatter.ISO_OFFSET_DATE_TIME);

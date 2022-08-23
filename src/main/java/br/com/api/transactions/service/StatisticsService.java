@@ -33,13 +33,19 @@ public class StatisticsService {
         DoubleSummaryStatistics summary = transactionValues.stream()
                 .collect(Collectors.summarizingDouble(BigDecimal::doubleValue));
 
-        Statistics statistics = Statistics.builder()
-                .count(summary.getCount())
-                .average(summary.getAverage())
-                .max(summary.getMax())
-                .min(summary.getMin())
-                .sum(summary.getSum())
-                .build();
+        Statistics statistics;
+
+        if(transactionValues.isEmpty()){
+            statistics = new Statistics();
+        }else{
+            statistics = Statistics.builder()
+                    .count(summary.getCount())
+                    .average(summary.getAverage())
+                    .max(summary.getMax())
+                    .min(summary.getMin())
+                    .sum(summary.getSum())
+                    .build();
+        }
 
         log.info(statistics);
 
